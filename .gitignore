@@ -1,0 +1,46 @@
+# ──── Data ────
+# MIMIC-III is restricted-access. Processed outputs are large and generated.
+Data/
+
+# ──── Checkpoints, logs, results ────
+Model/checkpoints/
+Model/logs/
+Evaluation/results/
+
+# ──── Python ────
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# ──── Understand-anything cache ────
+.understand-anything/
+
+# ──── Paper PDFs (binary, large) ────
+*.pdf
+
+# ──── OS ────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ──── Virtual env ────
+.env
+venv/
+env/
+.venv/
+
+# ──── IDE ────
+.vscode/
+.idea/
+
+# ──── Reference implementations (local only) ────
+Repo Source/
+
+# ──── Planning docs (local only) ────
+PLAN.md
+VALIDITY.md
