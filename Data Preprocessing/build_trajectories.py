@@ -60,8 +60,7 @@ def main():
         script_dir = os.path.dirname(os.path.abspath(__file__))
         exit_code = os.system(
             f"cd '{script_dir}' && python preprocess.py "
-            f"--db-host {args.db_host} --db-name {args.db_name} "
-            f"--db-user {args.db_user} --db-pass {args.db_pass}"
+            f"-u {args.db_user} -p '{args.db_pass}' --host {args.db_host}"
         )
         if exit_code != 0:
             print("ERROR: preprocess.py failed")
@@ -70,7 +69,8 @@ def main():
         os.system(f"mv '{script_dir}/processed_files' '{data_dir}/'")
     
     # ──── Step 2: Build sepsis cohort ────
-    if not args.skip_cohort:
+    csv_path = f'{data_dir}/sepsis_final_data_withTimes.csv'
+    if not args.skip_cohort and not os.path.exists(csv_path):
         print("=" * 60)
         print("STEP 2/5: Building sepsis cohort (this WILL take 2-3 hours)...")
         print("=" * 60)
@@ -79,13 +79,16 @@ def main():
         if exit_code != 0:
             print("ERROR: sepsis_cohort.py failed")
             sys.exit(1)
+    elif os.path.exists(csv_path):
+        print("=" * 60)
+        print(f"STEP 2/5: SKIPPED — {csv_path} already exists")
+        print("=" * 60)
     
     # ──── Step 3: Load & apply shifted alignment ────
     print("=" * 60)
     print("STEP 3/5: Applying SHIFTED temporal alignment...")
     print("=" * 60)
     
-    csv_path = f'{data_dir}/sepsis_final_data_withTimes.csv'
     if not os.path.exists(csv_path):
         print(f"ERROR: {csv_path} not found. Run sepsis_cohort.py first.")
         sys.exit(1)

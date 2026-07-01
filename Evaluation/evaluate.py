@@ -142,21 +142,33 @@ def evaluate_wis_single(model, test_dataset, config, device='cpu', eps_soften=No
                     r_t = torch.stack(context_rtg[ctx_start:]).unsqueeze(0).to(device)
                     ts_t = torch.tensor([list(range(len(context_states[ctx_start:])))], device=device)
                 
-                # Get π_e(a | s_t, history)
-                vaso_logits, iv_logits, _, _ = model(
-                    s_t, a_prev, None, r_t, ts_t
+                # ──── Chain rule teacher forcing (same as compute_loss) ────
+                # Step 1: Get P_vaso(a_v_obs | τ) — vaso_realized=None for vaso inference
+                vaso_logits, _, _, _ = model(
+                    s_t, a_prev, None, r_t, ts_t, vaso_realized=None
                 )
                 vaso_probs = F.softmax(vaso_logits[0, -1], dim=-1).cpu().numpy()
-                iv_probs   = F.softmax(iv_logits[0, -1], dim=-1).cpu().numpy()
                 
                 # Observed action
                 a_true = int(true_actions[t].item())
                 a_vaso_true = a_true % 5
                 a_iv_true   = a_true // 5
                 
-                # π_e(a_true | s_t, history_t)
+                # π_e_vaso = P(a_v_obs | τ)
                 pi_e_vaso = vaso_probs[a_vaso_true]
-                pi_e_iv   = iv_probs[a_iv_true]
+                
+                # Step 2: Get P_iv(a_i_obs | τ, a_v_obs) — conditioned on OBSERVED vaso
+                # vaso_obs_tensor must match time dimension of context [1, T→s_t.shape[1]]
+                vaso_obs_tensor = torch.full((1, s_t.shape[1]), a_vaso_true, device=device, dtype=torch.long)
+                _, iv_logits, _, _ = model(
+                    s_t, a_prev, None, r_t, ts_t, vaso_realized=vaso_obs_tensor
+                )
+                iv_probs = F.softmax(iv_logits[0, -1], dim=-1).cpu().numpy()
+                
+                # π_e_iv = P(a_i_obs | τ, a_v_obs)
+                pi_e_iv = iv_probs[a_iv_true]
+                
+                # π_e(a_obs | τ) = P(a_v_obs | τ) · P(a_i_obs | τ, a_v_obs)  ← chain rule
                 pi_e = pi_e_vaso * pi_e_iv
                 
                 # π_b(a_true | s_t) from k-NN
@@ -174,7 +186,7 @@ def evaluate_wis_single(model, test_dataset, config, device='cpu', eps_soften=No
                 context_states.append(states[t])
                 context_actions.append(true_subactionvecs[t])
                 if t < L - 1:
-                    context_rtg.append(rtg[t+1:t+2])
+                    context_rtg.append(rtg[t+1].reshape(1))
                 else:
                     context_rtg.append(torch.tensor([[0.0]]))
         
@@ -371,20 +383,26 @@ def compute_action_frequencies(model, test_dataset, config, device='cpu'):
                     r_t = torch.stack(context_rtg[ctx_start:]).unsqueeze(0).to(device)
                     ts_t = torch.tensor([list(range(len(context_states[ctx_start:])))], device=device)
                 
-                vaso_logits, iv_logits, _, _ = model(
-                    s_t, a_prev, None, r_t, ts_t
+                # Sequential generation for visualization: vaso → argmax → iv conditioned on argmax
+                vaso_logits, _, _, _ = model(
+                    s_t, a_prev, None, r_t, ts_t, vaso_realized=None
                 )
                 vaso_pred = torch.argmax(vaso_logits[0, -1]).item()
+                
+                vaso_cond = torch.full((1, s_t.shape[1]), vaso_pred, device=device, dtype=torch.long)
+                _, iv_logits, _, _ = model(
+                    s_t, a_prev, None, r_t, ts_t, vaso_realized=vaso_cond
+                )
                 iv_pred = torch.argmax(iv_logits[0, -1]).item()
                 
                 prism_counts[vaso_pred, iv_pred] += 1
                 
                 # Update context with ground truth
-                true_sub = test_dataset.subactionvecs[traj_idx, t:t+1]
+                true_sub = test_dataset.subactionvecs[traj_idx, t]
                 context_states.append(states[t])
                 context_actions.append(true_sub)
                 if t < L - 1:
-                    context_rtg.append(rtg[t+1:t+2])
+                    context_rtg.append(rtg[t+1].reshape(1))
                 else:
                     context_rtg.append(torch.tensor([[0.0]]))
     
@@ -522,10 +540,16 @@ def quadrant_analysis(model, test_dataset, config, device='cpu'):
                     r_t = torch.stack(context_rtg[ctx_start:]).unsqueeze(0).to(device)
                     ts_t = torch.tensor([list(range(len(context_states[ctx_start:])))], device=device)
                 
-                vaso_logits, iv_logits, _, _ = model(
-                    s_t, a_prev, None, r_t, ts_t
+                # Sequential generation for quadrant classification
+                vaso_logits, _, _, _ = model(
+                    s_t, a_prev, None, r_t, ts_t, vaso_realized=None
                 )
                 vaso_pred = torch.argmax(vaso_logits[0, -1]).item()
+                
+                vaso_cond = torch.full((1, s_t.shape[1]), vaso_pred, device=device, dtype=torch.long)
+                _, iv_logits, _, _ = model(
+                    s_t, a_prev, None, r_t, ts_t, vaso_realized=vaso_cond
+                )
                 iv_pred = torch.argmax(iv_logits[0, -1]).item()
                 a_prism = vaso_pred + iv_pred * 5
                 
@@ -547,11 +571,11 @@ def quadrant_analysis(model, test_dataset, config, device='cpu'):
                 })
                 
                 # Update context
-                true_sub = test_dataset.subactionvecs[traj_idx, t:t+1]
+                true_sub = test_dataset.subactionvecs[traj_idx, t]
                 context_states.append(states[t])
                 context_actions.append(true_sub)
                 if t < L - 1:
-                    context_rtg.append(rtg[t+1:t+2])
+                    context_rtg.append(rtg[t+1].reshape(1))
                 else:
                     context_rtg.append(torch.tensor([[0.0]]))
     
@@ -697,7 +721,7 @@ def main():
     print("PRISM — FULL OFFLINE EVALUATION (6 Metrics)")
     print("=" * 70)
     
-    checkpoint = torch.load(args.checkpoint, map_location=device)
+    checkpoint = torch.load(args.checkpoint, map_location=device, weights_only=False)
     model = PRISMDecisionTransformer(
         state_dim=config.state_dim,
         act_dim=config.act_dim,

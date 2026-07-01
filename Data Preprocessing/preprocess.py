@@ -15,12 +15,13 @@ import psycopg2 as pg
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-u", "--username", default='USERNAME', help="Username used to access the MIMIC Database", type=str)
-parser.add_argument("-p", "--password", default='PASSWORD', help="User's password for MIMIC Database", type=str)
+parser.add_argument("-u", "--username", default='postgres', help="Username used to access the MIMIC Database", type=str)
+parser.add_argument("-p", "--password", default='', help="User's password for MIMIC Database", type=str)
+parser.add_argument("--host", default='localhost', help="Database host", type=str)
 pargs = parser.parse_args()
 
 # Initializing database connection
-conn = pg.connect("dbname='mimic' user={0} host='mimic' options='--search_path=mimimciii' password={1}".format(pargs.username,pargs.password))
+conn = pg.connect("dbname='mimic' user={0} host={1} options='--search_path=mimiciii' password={2}".format(pargs.username, pargs.host, pargs.password))
 
 # Path for processed data storage
 exportdir = os.path.join(os.getcwd(),'processed_files')
@@ -190,7 +191,7 @@ d.to_csv(os.path.join(exportdir,'abx.csv'),index=False,sep='|')
 # 30. 'psychoses', 
 # 31. 'depression'
 query = """
-DROP MATERIALIZED VIEW IF EXISTS PUBLIC.ELIXHAUSER_QUAN CASCADE;
+DROP TABLE IF EXISTS PUBLIC.ELIXHAUSER_QUAN CASCADE;
 CREATE MATERIALIZED VIEW PUBLIC.ELIXHAUSER_QUAN AS
 with icd as
 (

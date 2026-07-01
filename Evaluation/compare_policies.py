@@ -46,7 +46,7 @@ def main():
     print("PRISM — POLICY COMPARISON")
     print("=" * 70)
     
-    checkpoint = torch.load(args.checkpoint, map_location=device)
+    checkpoint = torch.load(args.checkpoint, map_location=device, weights_only=False)
     model = PRISMDecisionTransformer(
         state_dim=config.state_dim, act_dim=config.act_dim,
         vaso_dim=config.vaso_dim, iv_dim=config.iv_dim,
