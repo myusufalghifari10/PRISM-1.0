@@ -1,0 +1,33 @@
+# BCQf Shifted Reproduction — Python Dependencies
+# Install: pip install -r requirements.txt
+
+# ── PyTorch (CPU — sesuaikan untuk GPU RTX 5060 jika perlu) ──
+torch>=2.0,<3.0
+pytorch-lightning>=1.9,<2.0
+test-tube>=0.7
+
+# ── Data Processing ──
+numpy>=1.24,<2.0
+pandas>=1.5,<3.0
+scipy>=1.10,<2.0
+scikit-learn>=1.2,<2.0
+
+# ── Database (MIMIC-III extraction) ──
+psycopg2-binary>=2.9
+pyprind>=2.11
+
+# ── Imputation (cohort construction) ──
+# fancyimpute 0.5.5 is old; if it fails, use scikit-learn's KNNImputer as fallback
+fancyimpute==0.5.5
+
+# ── Visualization ──
+matplotlib>=3.5
+seaborn>=0.12
+
+# ── Utilities ──
+tqdm>=4.64
+joblib>=1.2
+
+# ── Jupyter ──
+jupyter>=1.0
+ipykernel>=6.0

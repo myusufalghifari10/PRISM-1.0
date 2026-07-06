@@ -7,6 +7,18 @@ Model/checkpoints/
 Model/logs/
 Evaluation/results/
 
+# ──── Old project structure (moved to RL_mimic_sepsis/) ────
+1_preprocess/
+Data Preprocessing/
+Evaluation/
+Model/
+
+# ──── Jupyter checkpoints ────
+.ipynb_checkpoints/
+
+# ──── Temp files ────
+.pip-tmp/
+
 # ──── Python ────
 __pycache__/
 *.pyc
@@ -14,6 +26,27 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+
+# ──── Generated data (large, reproducible) ────
+data/
+RL_mimic_sepsis/data/
+**/data/*.csv
+**/data/*.pt
+**/data/*.npz
+
+# ──── Generated notebooks (executed output) ────
+*_shifted.nbconvert.ipynb
+
+# ──── Training logs & checkpoints ────
+**/logs/
+**/logs_shifted/
+**/slurm/
+
+# ──── Generated figures ────
+**/fig/
+
+# ──── PyTorch Lightning ────
+lightning_logs/
 
 # ──── Understand-anything cache ────
 .understand-anything/
@@ -33,6 +66,7 @@ Thumbs.db
 venv/
 env/
 .venv/
+prism-venv/
 
 # ──── IDE ────
 .vscode/
@@ -44,3 +78,5 @@ Repo Source/
 # ──── Planning docs (local only) ────
 PLAN.md
 VALIDITY.md
+**/processed_files/
+**/processed_files/

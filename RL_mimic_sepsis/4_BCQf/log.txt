@@ -1,0 +1,1006 @@
+(prism-venv) ┌──(yusuf@yusuf-pc)-[~/Yusuf/Kuliah/AI/Project/ICU/PRISM-1.0/RL_mimic_sepsis/4_BCQf]
+└─$ python3 opt_shifted.py
+
+==================================================
+Trial: threshold=0.0, seed=0
+==================================================
+Seed set to 0
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+You are using a CUDA device ('NVIDIA GeForce RTX 5060') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+/home/yusuf/Yusuf/Kuliah/AI/Project/ICU/PRISM-1.0/prism-venv/lib/python3.14/site-packages/pytorch_lightning/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+/home/yusuf/Yusuf/Kuliah/AI/Project/ICU/PRISM-1.0/prism-venv/lib/python3.14/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:434: The 'train_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=15` in the `DataLoader` to improve performance.
+/home/yusuf/Yusuf/Kuliah/AI/Project/ICU/PRISM-1.0/prism-venv/lib/python3.14/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:434: The 'val_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=15` in the `DataLoader` to improve performance.
+Epoch 6:  82%|██████████████████████████████████▎       | 1198/1467 [00:30<00:06, 39.66it/s, v_num=3, iteration=1e+4, val_qvalues=14.10, val_wis=100.0, val_ess=3.740]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.0, seed=1
+==================================================
+Seed set to 1
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|██████████████████████████████████▎       | 1198/1467 [00:32<00:07, 37.38it/s, v_num=4, iteration=1e+4, val_qvalues=14.20, val_wis=99.90, val_ess=1.500]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.0, seed=2
+==================================================
+Seed set to 2
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|██████████████████████████████████▎       | 1198/1467 [00:30<00:06, 38.75it/s, v_num=5, iteration=1e+4, val_qvalues=14.60, val_wis=96.70, val_ess=28.50]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.0, seed=3
+==================================================
+Seed set to 3
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|██████████████████████████████████▎       | 1198/1467 [00:30<00:06, 39.23it/s, v_num=6, iteration=1e+4, val_qvalues=14.50, val_wis=96.70, val_ess=29.20]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.0, seed=4
+==================================================
+Seed set to 4
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|██████████████████████████████████▎       | 1198/1467 [00:30<00:06, 39.09it/s, v_num=7, iteration=1e+4, val_qvalues=14.60, val_wis=96.70, val_ess=29.30]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.01, seed=0
+==================================================
+Seed set to 0
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|██████████████████████████████████▎       | 1198/1467 [00:30<00:06, 39.73it/s, v_num=8, iteration=1e+4, val_qvalues=14.80, val_wis=100.0, val_ess=4.510]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.01, seed=1
+==================================================
+Seed set to 1
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|██████████████████████████████████▎       | 1198/1467 [00:30<00:06, 39.64it/s, v_num=9, iteration=1e+4, val_qvalues=15.00, val_wis=99.90, val_ess=1.590]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.01, seed=2
+==================================================
+Seed set to 2
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.55it/s, v_num=10, iteration=1e+4, val_qvalues=15.30, val_wis=99.60, val_ess=1.680]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.01, seed=3
+==================================================
+Seed set to 3
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.51it/s, v_num=11, iteration=1e+4, val_qvalues=15.20, val_wis=96.70, val_ess=29.90]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.01, seed=4
+==================================================
+Seed set to 4
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:31<00:06, 38.59it/s, v_num=12, iteration=1e+4, val_qvalues=15.40, val_wis=100.0, val_ess=1.330]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.05, seed=0
+==================================================
+Seed set to 0
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.31it/s, v_num=13, iteration=1e+4, val_qvalues=15.40, val_wis=99.80, val_ess=2.630]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.05, seed=1
+==================================================
+Seed set to 1
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.00it/s, v_num=14, iteration=1e+4, val_qvalues=15.40, val_wis=99.80, val_ess=3.990]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.05, seed=2
+==================================================
+Seed set to 2
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.48it/s, v_num=15, iteration=1e+4, val_qvalues=15.60, val_wis=91.70, val_ess=15.50]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.05, seed=3
+==================================================
+Seed set to 3
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.58it/s, v_num=16, iteration=1e+4, val_qvalues=15.60, val_wis=98.50, val_ess=3.230]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.05, seed=4
+==================================================
+Seed set to 4
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.03it/s, v_num=17, iteration=1e+4, val_qvalues=15.90, val_wis=88.60, val_ess=1.820]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.1, seed=0
+==================================================
+Seed set to 0
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.16it/s, v_num=18, iteration=1e+4, val_qvalues=16.00, val_wis=95.50, val_ess=26.30]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.1, seed=1
+==================================================
+Seed set to 1
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:31<00:07, 37.66it/s, v_num=19, iteration=1e+4, val_qvalues=16.00, val_wis=95.30, val_ess=27.30]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.1, seed=2
+==================================================
+Seed set to 2
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.34it/s, v_num=20, iteration=1e+4, val_qvalues=16.30, val_wis=95.40, val_ess=80.70]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.1, seed=3
+==================================================
+Seed set to 3
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.61it/s, v_num=21, iteration=1e+4, val_qvalues=16.40, val_wis=93.90, val_ess=22.20]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.1, seed=4
+==================================================
+Seed set to 4
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.54it/s, v_num=22, iteration=1e+4, val_qvalues=16.60, val_wis=94.60, val_ess=22.00]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.3, seed=0
+==================================================
+Seed set to 0
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.58it/s, v_num=23, iteration=1e+4, val_qvalues=17.20, val_wis=94.60, val_ess=204.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.3, seed=1
+==================================================
+Seed set to 1
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.33it/s, v_num=24, iteration=1e+4, val_qvalues=17.00, val_wis=93.40, val_ess=169.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.3, seed=2
+==================================================
+Seed set to 2
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.36it/s, v_num=25, iteration=1e+4, val_qvalues=17.00, val_wis=94.90, val_ess=213.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.3, seed=3
+==================================================
+Seed set to 3
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:31<00:06, 38.54it/s, v_num=26, iteration=1e+4, val_qvalues=17.70, val_wis=95.50, val_ess=180.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.3, seed=4
+==================================================
+Seed set to 4
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:31<00:07, 38.37it/s, v_num=27, iteration=1e+4, val_qvalues=17.40, val_wis=94.20, val_ess=200.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.5, seed=0
+==================================================
+Seed set to 0
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:31<00:07, 37.52it/s, v_num=28, iteration=1e+4, val_qvalues=16.00, val_wis=93.90, val_ess=227.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.5, seed=1
+==================================================
+Seed set to 1
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:31<00:07, 38.26it/s, v_num=29, iteration=1e+4, val_qvalues=15.60, val_wis=93.40, val_ess=221.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.5, seed=2
+==================================================
+Seed set to 2
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.32it/s, v_num=30, iteration=1e+4, val_qvalues=15.80, val_wis=94.80, val_ess=224.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.5, seed=3
+==================================================
+Seed set to 3
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.36it/s, v_num=31, iteration=1e+4, val_qvalues=16.10, val_wis=93.50, val_ess=225.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.5, seed=4
+==================================================
+Seed set to 4
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:32<00:07, 36.87it/s, v_num=32, iteration=1e+4, val_qvalues=16.10, val_wis=93.30, val_ess=223.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.75, seed=0
+==================================================
+Seed set to 0
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 38.98it/s, v_num=33, iteration=1e+4, val_qvalues=11.90, val_wis=93.30, val_ess=226.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.75, seed=1
+==================================================
+Seed set to 1
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.72it/s, v_num=34, iteration=1e+4, val_qvalues=11.50, val_wis=94.50, val_ess=219.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.75, seed=2
+==================================================
+Seed set to 2
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:32<00:07, 37.35it/s, v_num=35, iteration=1e+4, val_qvalues=11.50, val_wis=94.20, val_ess=217.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.75, seed=3
+==================================================
+Seed set to 3
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:31<00:06, 38.46it/s, v_num=36, iteration=1e+4, val_qvalues=11.70, val_wis=93.60, val_ess=222.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.75, seed=4
+==================================================
+Seed set to 4
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:32<00:07, 37.09it/s, v_num=37, iteration=1e+4, val_qvalues=11.70, val_wis=93.90, val_ess=211.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.9999, seed=0
+==================================================
+Seed set to 0
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:33<00:07, 35.93it/s, v_num=38, iteration=1e+4, val_qvalues=9.890, val_wis=94.10, val_ess=219.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.9999, seed=1
+==================================================
+Seed set to 1
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 38.83it/s, v_num=39, iteration=1e+4, val_qvalues=9.630, val_wis=94.10, val_ess=218.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.9999, seed=2
+==================================================
+Seed set to 2
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.33it/s, v_num=40, iteration=1e+4, val_qvalues=9.370, val_wis=93.80, val_ess=209.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.9999, seed=3
+==================================================
+Seed set to 3
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.05it/s, v_num=41, iteration=1e+4, val_qvalues=9.750, val_wis=93.00, val_ess=219.0]
+                                                                                                                                                                      
+==================================================
+Trial: threshold=0.9999, seed=4
+==================================================
+Seed set to 4
+Replay Buffer loaded with 146636 transitions.
+Episodic Buffer loaded with 2760 episides.
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+
+  | Name     | Type     | Params | Mode  | FLOPs
+------------------------------------------------------
+0 | Q        | BCQf_Net | 170 K  | train | 0    
+1 | Q_target | BCQf_Net | 170 K  | train | 0    
+------------------------------------------------------
+170 K     Trainable params
+170 K     Non-trainable params
+340 K     Total params
+1.360     Total estimated model params size (MB)
+26        Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+Epoch 6:  82%|█████████████████████████████████▍       | 1198/1467 [00:30<00:06, 39.40it/s, v_num=42, iteration=1e+4, val_qvalues=9.540, val_wis=94.00, val_ess=213.0]
