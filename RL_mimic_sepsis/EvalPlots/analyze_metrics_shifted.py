@@ -1,7 +1,7 @@
 """Analyze BCQf shifted training results across all versions."""
 import pandas as pd, numpy as np, re, os
 
-logdir = os.path.join(os.path.dirname(__file__), '../4_BCQf/logs/mimic_dBCQf')
+logdir = os.path.join(os.path.dirname(__file__), '../4_BCQf/logs_shifted/mimic_dBCQf_shifted')
 
 all_data = []
 for ver in range(40):

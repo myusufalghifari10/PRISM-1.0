@@ -8,7 +8,7 @@ from data import MIMIC3SepsisDataModule
 
 def main(hparams, cluster):
     # wait for Slurm file writes to propagate
-    time.sleep(15)
+    time.sleep(0)
     
     pl.seed_everything(0)
     
@@ -68,8 +68,9 @@ def optimize_on_cluster(hyperparams):
 if __name__ ==  '__main__':
     # Hyperparameter search grid
     parser = HyperOptArgumentParser(strategy='grid_search')
-    parser.opt_list('--latent_dim', default=32, type=int, tunable=True, options=[8, 16, 32, 64, 128])
+    parser.opt_list('--latent_dim', default=64, type=int, tunable=True, options=[8, 16, 32, 64, 128])
     parser.opt_list('--lr', default=1e-4, type=float, tunable=True, options=[1e-5, 5e-4, 1e-4, 5e-3, 1e-3])
     hparams = parser.parse_args()
     
-    optimize_on_cluster(hparams)
+    # Local execution (original used SLURM: optimize_on_cluster(hparams))
+    main(hparams, cluster=None)

@@ -51,14 +51,11 @@ def main(args, cluster):
     )
     
     trainer = pl.Trainer(
-        accelerator='cpu',
+        accelerator='gpu',
         max_steps=args.max_steps,
         logger=logger,
         val_check_interval=args.eval_frequency,
-        callbacks=[
-            pl.callbacks.ModelCheckpoint(save_top_k=-1, filename='{step}'),
-        ],
-        enable_progress_bar=False,
+        enable_progress_bar=True,
         num_sanity_val_steps=0,
     )
     
@@ -112,4 +109,14 @@ if __name__ ==  '__main__':
     parser.opt_list("--threshold", type=float, tunable=True, options=[0.0, 0.01, 0.05, 0.1, 0.3, 0.5, 0.75, 0.9999])
     hparams = parser.parse_args()
     
-    optimize_on_cluster(hparams)
+    # Local grid search (Tang used SLURM: 8 thresholds × 5 seeds = 40 trials)
+    import itertools
+    thresholds = [0.0, 0.01, 0.05, 0.1, 0.3, 0.5, 0.75, 0.9999]
+    seeds = [0, 1, 2, 3, 4]
+    for threshold, seed in itertools.product(thresholds, seeds):
+        hparams.threshold = threshold
+        hparams.seed = seed
+        print(f"\n{'='*50}")
+        print(f"Trial: threshold={threshold}, seed={seed}")
+        print(f"{'='*50}")
+        main(hparams, cluster=None)

@@ -112,6 +112,7 @@ class BCQf(pl.LightningModule):
         
         # Number of training iterations
         self.iterations = 0
+        self._last_saved = -500  # Track last saved iteration for checkpoint
         
     @staticmethod
     def add_model_specific_args(parent_parser):
@@ -198,17 +199,23 @@ class BCQf(pl.LightningModule):
         self.log('val_wis', valid_wis, prog_bar=True, logger=True)
         self.log('val_ess', valid_ess, prog_bar=True, logger=True)
         
-        # Manual checkpoint — save every 1000 steps (avoid 4000 files)
-        if self.iterations % 1000 == 0:
-            self.trainer.save_checkpoint(
-                self.trainer.logger.log_dir + f"/step={self.iterations}.ckpt")
-        
         return {
             'iteration': self.iterations,
             'val_qvalues': qvalues,
             'val_wis': valid_wis,
             'val_ess': valid_ess,
         }
+    
+    def on_validation_end(self):
+        """Save checkpoint every ~500 iterations + always at final step."""
+        should_save = (self.iterations - self._last_saved >= 500) or (self.iterations >= self.hparams.max_steps)
+        if should_save:
+            import os
+            self._last_saved = self.iterations
+            rounded = (self.iterations // 100) * 100
+            ckpt_path = os.path.join(self.trainer.logger.log_dir, f"step={rounded}.ckpt")
+            checkpoint = self.trainer._checkpoint_connector.dump_checkpoint()
+            torch.save(checkpoint, ckpt_path)
     
 
     def offline_q_evaluation(self, eval_buffer):
