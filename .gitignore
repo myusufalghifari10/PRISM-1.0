@@ -81,3 +81,5 @@ Repo Source/
 # ──── Planning docs ────
 PLAN.md
 VALIDITY.md
+.plans/
+DIF.md

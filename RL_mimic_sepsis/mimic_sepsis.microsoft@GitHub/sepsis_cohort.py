@@ -956,7 +956,11 @@ reformat4t = reformat4t.loc[~ii]
 # Exclude patients who died in ICU during data collection period
 print('Full ICU -- excluding patients who died in ICU during data collection period')
 ii = (reformat4t['bloc'] == 1) & (reformat4t['died_within_48h_of_out_time'] == 1) & (reformat4t['delay_end_of_record_and_discharge_or_death'] < 24)
-ii = reformat4t['icustayid'][ii][reformat4t['icustayid'][ii].isin(icustayidlist)]
+# NOTE: Reverted to Tang's original (buggy) code for reproduction fidelity.
+# Tang's sepsis_cohortOri.py uses .index which returns DataFrame index positions
+# instead of actual icustay IDs, causing this exclusion to be a no-op.
+# This keeps ~725 extra patients in the cohort (19,287 vs 18,562).
+ii = reformat4t['icustayid'][ii].isin(icustayidlist).index  # Tang's original: buggy but matches paper cohort
 ii = reformat4t['icustayid'].isin(ii)
 reformat4t = reformat4t.loc[~ii] 
 
