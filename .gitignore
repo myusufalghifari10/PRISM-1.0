@@ -72,6 +72,7 @@ env/
 prism-venv/
 venv/
 venv_offlinerl
+.python-version
 
 # ──── IDE ────
 .vscode/
@@ -88,3 +89,4 @@ DIF.md
 .Progress_Magang_ICU.md.kate-swp
 Progress_Magang_ICU.md
 note.md
+.investigation/
