@@ -23,7 +23,7 @@
 | Checkpoint | `version_15/epoch=203-step=21623.ckpt` | `version_17/epoch=251-step=26712-v1.ckpt` |
 | latent_dim | 64 | 64 |
 | lr | ? | 1e-4 |
-| val_loss | 450.76? | 453.37 |
+| val_loss | ? | 453.37 |
 
 **Penyebab**: Arsitektur 100% sama, tapi environment training beda (PyTorch 1.x vs 2.x) → optimizer behavior beda → gradient update divergen → bobot berbeda walaupun seed sama.
 
