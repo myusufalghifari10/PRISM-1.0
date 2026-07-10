@@ -74,9 +74,7 @@ Penelitian ini menghadapi dan menyelesaikan **dua tantangan** dalam offline RL u
 
 4. **Tang 2022 sudah setengah shifted.** BCQ/BCQf Tang melakukan internal shift di `data.py` load() (baris 43-46), tapi encoder dan KNN tetap non-shifted. Paper Tang 2026 ("Off by a Beat") baru benerin full pipeline.
 
-5. **Factored > 5×5 > Continuous untuk dataset klinis sparse.** Discrete 5×5 gagal di kombinasi langka, continuous gagal karena data per titik nyaris nol, factored bertahan karena sample sharing antar sub-action. Didukung oleh Zou et al. (2025) yang membuktikan discrete outperform continuous 6× di WIS.
-
-6. **Kontribusi:** (a) reproduksi penuh metodologi Tang 2022, (b) koreksi temporal alignment penuh (Tang 2026), (c) analisis perbandingan tiga action space untuk sepsis RL, (d) bukti empiris bahwa BCQf > BCQ hanya konsisten muncul di pipeline shifted — menggarisbawahi pentingnya causal correctness dalam evaluasi RL klinis.
+5. **Kontribusi:** (a) reproduksi penuh metodologi Tang 2022, (b) menerapkan koreksi temporal alignment penuh (Tang 2026) kepada metodologi Tang 2022, (c) analisis perbandingan tiga action space untuk sepsis RL, (d) bukti empiris bahwa BCQf > BCQ hanya konsisten muncul di pipeline shifted — menggarisbawahi pentingnya causal correctness dalam evaluasi RL klinis.
 
 ---
 
