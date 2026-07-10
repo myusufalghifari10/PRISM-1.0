@@ -6,40 +6,7 @@ import copy
 import numpy as np
 import argparse
 
-all_subactions_vec = torch.tensor([
-    #  Vaso        IV
-    [1,0,0,0,0, 1,0,0,0,0],
-    [0,1,0,0,0, 1,0,0,0,0],
-    [0,0,1,0,0, 1,0,0,0,0],
-    [0,0,0,1,0, 1,0,0,0,0],
-    [0,0,0,0,1, 1,0,0,0,0],
-    
-    [1,0,0,0,0, 0,1,0,0,0],
-    [0,1,0,0,0, 0,1,0,0,0],
-    [0,0,1,0,0, 0,1,0,0,0],
-    [0,0,0,1,0, 0,1,0,0,0],
-    [0,0,0,0,1, 0,1,0,0,0],
-    
-    [1,0,0,0,0, 0,0,1,0,0],
-    [0,1,0,0,0, 0,0,1,0,0],
-    [0,0,1,0,0, 0,0,1,0,0],
-    [0,0,0,1,0, 0,0,1,0,0],
-    [0,0,0,0,1, 0,0,1,0,0],
-    
-    [1,0,0,0,0, 0,0,0,1,0],
-    [0,1,0,0,0, 0,0,0,1,0],
-    [0,0,1,0,0, 0,0,0,1,0],
-    [0,0,0,1,0, 0,0,0,1,0],
-    [0,0,0,0,1, 0,0,0,1,0],
-    
-    [1,0,0,0,0, 0,0,0,0,1],
-    [0,1,0,0,0, 0,0,0,0,1],
-    [0,0,1,0,0, 0,0,0,0,1],
-    [0,0,0,1,0, 0,0,0,0,1],
-    [0,0,0,0,1, 0,0,0,0,1.],
-])
-
-class BCQf_Net(nn.Module):
+class BCQ_Net(nn.Module):
     def __init__(self, state_dim, action_dim, hidden_dim):
         super().__init__()
         self.q = nn.Sequential(
@@ -47,23 +14,23 @@ class BCQf_Net(nn.Module):
             nn.ReLU(),
             nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(),
-            nn.Linear(hidden_dim, 10), # vaso + iv
+            nn.Linear(hidden_dim, action_dim),
         )
         self.πb = nn.Sequential(
             nn.Linear(state_dim, hidden_dim),
             nn.ReLU(),
             nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(),
-            nn.Linear(hidden_dim, 10), # vaso + iv
+            nn.Linear(hidden_dim, action_dim),
         )
     
     def forward(self, x):
         q_values = self.q(x)
         p_logits = self.πb(x)
-        return q_values, F.log_softmax(p_logits, dim=-1), p_logits
+        return q_values, F.log_softmax(p_logits, dim=1), p_logits
 
 
-class BCQf(pl.LightningModule):
+class BCQ(pl.LightningModule):
     def __init__(
         self,
         *,
@@ -86,7 +53,7 @@ class BCQf(pl.LightningModule):
         super().__init__()
         self.save_hyperparameters()
         self.automatic_optimization = False
-        self.Q = BCQf_Net(state_dim, num_actions, hidden_dim)
+        self.Q = BCQ_Net(state_dim, num_actions, hidden_dim)
         self.Q_target = copy.deepcopy(self.Q)
         self.discount = discount
         self.num_actions = num_actions
@@ -129,41 +96,34 @@ class BCQf(pl.LightningModule):
         return self.Q(state)
     
     def configure_optimizers(self):
-        self.all_subactions_vec = all_subactions_vec.to(self.device)
         self.Q_optimizer = torch.optim.Adam(self.Q.parameters(), lr=self.hparams.lr, weight_decay=self.hparams.weight_decay)
         return self.Q_optimizer
     
     def training_step(self, batch, batch_idx):
-        state, action, subaction, subactionvec, next_state, reward, notdone, subpibs = batch
+        state, action, next_state, reward, notdone, pibs = batch
         
         # Compute the target Q value
         with torch.no_grad():
-            q, _, i = self.Q(next_state)
-            imt = F.log_softmax(i.reshape(-1, 2, 5), dim=-1).exp()
-            imt = (imt / imt.max(axis=-1, keepdim=True).values > self.threshold).float()
-            
-            # Factored action remapping
-            q = q @ self.all_subactions_vec.T
-            imt = torch.einsum('bi,bj->bji', imt[:,0,:], imt[:,1,:]).reshape(-1, 25) # both sub-action satisfy filter
-            
+            q, imt, i = self.Q(next_state)
+            imt = imt.exp()
+            imt = (imt / imt.max(1, keepdim=True).values > self.threshold).float()
+
             # Use large negative number to mask actions from argmax
             next_action = (imt * q + (1 - imt) * torch.finfo().min).argmax(axis=1, keepdim=True)
 
-            q, _, _ = self.Q_target(next_state)
-            q = q @ self.all_subactions_vec.T
+            q, imt, i = self.Q_target(next_state)
             target_Q = reward + notdone * self.discount * q.gather(1, next_action).reshape(-1, 1)
             
             if self.hparams.target_value_clipping:
                 target_Q = torch.clamp(target_Q, self.hparams.vmin, self.hparams.vmax)
 
         # Get current Q estimate
-        current_Q, _, i = self.Q(state)
-        imt = F.log_softmax(i.reshape(-1, 2, 5), dim=-1)
-        current_Q = torch.bmm(current_Q.unsqueeze(1), subactionvec.unsqueeze(2)).squeeze(1)
+        current_Q, imt, i = self.Q(state)
+        current_Q = current_Q.gather(1, action)
 
         # Compute Q loss
         q_loss = F.smooth_l1_loss(current_Q, target_Q)
-        i_loss = F.nll_loss(imt[:,0,:], subaction[:,0]) + F.nll_loss(imt[:,1,:], subaction[:,1])
+        i_loss = F.nll_loss(imt, action.reshape(-1))
         
         Q_loss = q_loss + i_loss + 1e-2 * i.pow(2).mean()
 
@@ -202,17 +162,13 @@ class BCQf(pl.LightningModule):
     
 
     def offline_q_evaluation(self, eval_buffer):
-        states, _, _, _, _, _, _, _ = eval_buffer
+        states, _, _, _, _, _ = eval_buffer
         states = states[:, 0, :]  # Only consider the initial states
 
         # Predict Q-values and Imitation probabilities
-        q, _, i = self.Q(states)
-        imt = F.log_softmax(i.reshape(-1, 2, 5), dim=-1).exp()
-        imt = (imt / imt.max(axis=-1, keepdim=True).values > self.threshold).float()
-
-        # Factored action remapping
-        q = q @ self.all_subactions_vec.T
-        imt = torch.einsum('bi,bj->bji', (imt[:,0,:], imt[:,1,:])).reshape(-1, 25)
+        q, imt, _ = self.Q(states)
+        imt = imt.exp()
+        imt = (imt / imt.max(axis=1, keepdim=True).values > self.threshold).float()
 
         # Use large negative number to mask actions from argmax
         values = (imt * q + (1. - imt) * torch.finfo().min).max(axis=1).values
@@ -220,7 +176,7 @@ class BCQf(pl.LightningModule):
 
 
     def offline_evaluation(self, eval_buffer, weighted=True, eps=0.01):
-        states, actions, subactions, subactionvecs, rewards, not_dones, subpibs, estm_subpibs = eval_buffer
+        states, actions, rewards, not_dones, pibs, estm_pibs = eval_buffer
         rewards = rewards[:, :, 0].cpu().numpy()
         n, horizon, _ = states.shape
         discounted_rewards = rewards * (self.eval_discount ** np.arange(horizon))
@@ -230,25 +186,19 @@ class BCQf(pl.LightningModule):
             lng = (not_dones[idx, :, 0].sum() + 1).item()  # all but the final transition has notdone==1
 
             # Predict Q-values and Imitation probabilities
-            q, _, i = self.Q(states[idx])
-            imt = F.log_softmax(i.reshape(-1, 2, 5), dim=-1).exp()
-            imt = (imt / imt.max(axis=-1, keepdim=True).values > self.threshold).float()
-
-            # Factored action remapping
-            q = q @ self.all_subactions_vec.T
-            imt = torch.einsum('bi,bj->bji', (imt[:,0,:], imt[:,1,:])).reshape(-1, 25)
+            q, imt, _ = self.Q(states[idx])
+            imt = imt.exp()
+            imt = (imt / imt.max(1, keepdim=True).values > self.threshold).float()
 
             # Use large negative number to mask actions from argmax
             a_id = (imt * q + (1. - imt) * torch.finfo().min).argmax(axis=1).cpu().numpy()
-            pie_soft = np.zeros((horizon, 25))
-            estm_pibs = np.einsum('bi,bj->bji', estm_subpibs[idx][:,:5].cpu().numpy(), estm_subpibs[idx][:,5:].cpu().numpy()).reshape((-1, 25))
-            pie_soft += eps * estm_pibs # Soften using training behavior policy
+            pie_soft = np.zeros((horizon, self.num_actions))
+            pie_soft += eps * estm_pibs[idx].cpu().numpy() # Soften using training behavior policy
             pie_soft[range(horizon), a_id] += (1.0 - eps)
 
             # Compute importance sampling ratios
             a_obs = actions[idx, :, 0]
-            ir[idx, :lng] = pie_soft[range(lng), a_obs[:lng].cpu().numpy()] / \
-                (subpibs[idx, range(lng), a_obs[:lng] % 5].cpu().numpy() * subpibs[idx, range(lng), 5+a_obs[:lng] // 5].cpu().numpy())
+            ir[idx, :lng] = pie_soft[range(lng), a_obs[:lng].cpu().numpy()] / pibs[idx, range(lng), a_obs[:lng]].cpu().numpy()
             ir[idx, lng:] = 1  # Mask out the padded timesteps
 
         weights = np.clip(ir.cumprod(axis=1), 0, 1e3)

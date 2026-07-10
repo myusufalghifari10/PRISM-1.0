@@ -7,6 +7,7 @@ class AIS_LSTM(pl.LightningModule):
     def __init__(self, state_dim, context_dim, action_dim, latent_dim, hidden_dim=128, lr=1e-3):
         super().__init__()
         self.save_hyperparameters()
+        self.validation_step_outputs = []
         
         self.gen = nn.Sequential(
             nn.Linear(state_dim + context_dim + action_dim, hidden_dim),
@@ -66,11 +67,15 @@ class AIS_LSTM(pl.LightningModule):
         mse = self._get_prediction_mse_loss(batch)
         self.log('val_loss', loss, prog_bar=True, logger=True)
         self.log('val_mse', mse, prog_bar=True, logger=True)
+        self.validation_step_outputs.append({'val_loss': loss, 'val_mse': mse})
         return {'val_loss': loss, 'val_mse': mse}
     
     def on_validation_epoch_end(self):
-        # Lightning 2.x auto-averages metrics logged via self.log() in validation_step
-        pass
+        avg_loss = torch.stack([x['val_loss'] for x in self.validation_step_outputs]).mean()
+        avg_mse = torch.stack([x['val_mse'] for x in self.validation_step_outputs]).mean()
+        self.log('avg_val_loss', avg_loss)
+        self.log('avg_val_mse', avg_mse)
+        self.validation_step_outputs.clear()
     
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=self.hparams.lr)

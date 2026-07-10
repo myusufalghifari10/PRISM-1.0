@@ -7,7 +7,7 @@ from pytorch_lightning.loggers import CSVLogger
 from test_tube import Experiment, HyperOptArgumentParser, SlurmCluster
 from torch.utils.data import DataLoader
 
-from data import EpisodicBuffer, SASRBuffer, add_data_specific_args, remap_rewards
+from data import EpisodicBufferShifted, SASRBufferShifted, add_data_specific_args, remap_rewards
 from model import BCQf
 
 # Problem-specific hyperparameters
@@ -26,11 +26,11 @@ def main(args, cluster):
     logger = CSVLogger("logs_shifted", name="mimic_dBCQf_shifted")
 
     # Load training and validation data
-    train_buffer = SASRBuffer(state_dim, num_actions)
+    train_buffer = SASRBufferShifted(state_dim, num_actions)
     train_buffer.load(
         "../data/episodes+encoded_state+knn_pibs_factored/shifted_train_data.pt"
     )
-    val_episodes = EpisodicBuffer(state_dim, num_actions, horizon)
+    val_episodes = EpisodicBufferShifted(state_dim, num_actions, horizon)
     val_episodes.load(
         "../data/episodes+encoded_state+knn_pibs_factored/shifted_val_data.pt"
     )

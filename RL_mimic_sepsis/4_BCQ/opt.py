@@ -7,7 +7,7 @@ from pytorch_lightning.loggers import CSVLogger
 from torch.utils.data import DataLoader
 
 from data import EpisodicBuffer, SASRBuffer, add_data_specific_args, remap_rewards
-from model import BCQf
+from model import BCQ
 
 
 class StopAndSave(pl.Callback):
@@ -27,18 +27,17 @@ class StopAndSave(pl.Callback):
 # Problem-specific hyperparameters
 state_dim = 64
 num_actions = 25
-num_subactions = 10
 horizon = 20
 
 
 def main(args):
     pl.seed_everything(args.seed)
-    logger = CSVLogger("logs", name="mimic_dBCQf")
+    logger = CSVLogger("logs", name="mimic_dBCQ")
 
     train_buffer = SASRBuffer(state_dim, num_actions)
-    train_buffer.load("../data/episodes+encoded_state+knn_pibs_factored/train_data.pt")
+    train_buffer.load("../data/episodes+encoded_state+knn_pibs/train_data.pt")
     val_episodes = EpisodicBuffer(state_dim, num_actions, horizon)
-    val_episodes.load("../data/episodes+encoded_state+knn_pibs_factored/val_data.pt")
+    val_episodes.load("../data/episodes+encoded_state+knn_pibs/val_data.pt")
 
     train_buffer.reward = remap_rewards(train_buffer.reward, args)
     val_episodes.reward = remap_rewards(val_episodes.reward, args)
@@ -50,9 +49,9 @@ def main(args):
         val_episodes, batch_size=len(val_episodes), shuffle=False
     )
 
-    policy = BCQf(
+    policy = BCQ(
         state_dim=state_dim,
-        num_actions=num_subactions,
+        num_actions=num_actions,
         Rmin=Rmin,
         Rmax=Rmax,
         **vars(args),

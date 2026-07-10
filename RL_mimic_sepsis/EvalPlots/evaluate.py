@@ -159,6 +159,53 @@ def episodic_to_sasr(batch):
     return (state, action, subaction, subactionvec, next_state, reward, not_done, subpibs)
 
 
+# ── Shifted episodic buffer (no +1 offset) ──────────────────────────────────
+class EpisodicBufferFShifted(Dataset):
+    """
+    Factored episodic buffer for SHIFTED data (no +1 offset on load).
+    Use with data from SplitSepsisCohort_shifted.ipynb.
+    """
+    def __init__(self, state_dim, num_actions, horizon, buffer_size=0):
+        self.max_size = int(buffer_size)
+        self.horizon = horizon
+        self.state = torch.zeros((self.max_size, horizon, state_dim))
+        self.action = torch.zeros((self.max_size, horizon, 1), dtype=torch.long)
+        self.subaction = torch.zeros((self.max_size, horizon, 2), dtype=torch.long)
+        self.subactionvec = torch.zeros((self.max_size, horizon, 10))
+        self.reward = torch.zeros((self.max_size, horizon, 1))
+        self.not_done = torch.zeros((self.max_size, horizon, 1))
+        self.subpibs = torch.zeros((self.max_size, horizon, 10))
+        self.estm_subpibs = torch.zeros((self.max_size, horizon, 10))
+
+    def __len__(self):
+        return len(self.state)
+
+    def __getitem__(self, idx):
+        return (
+            self.state[idx],
+            self.action[idx],
+            self.subaction[idx],
+            self.subactionvec[idx],
+            self.reward[idx],
+            self.not_done[idx],
+            self.subpibs[idx],
+            self.estm_subpibs[idx],
+        )
+
+    def load(self, filename):
+        data = torch.load(filename)
+        # NO +1 offset — shifted data already pre-shifted
+        self.state = data['statevecs'][:, :-1, :]
+        self.action = data['actions'][:, :-1].unsqueeze(-1)
+        self.subaction = data['subactions'][:, :-1, :]
+        self.subactionvec = data['subactionvecs'][:, :-1, :]
+        self.reward = data['rewards'][:, :-1].unsqueeze(-1)
+        self.not_done = data['notdones'][:, :-1].unsqueeze(-1)
+        self.subpibs = data['subpibs'][:, :-1, :]
+        self.estm_subpibs = data['estm_subpibs'][:, :-1, :]
+        print(f"Shifted Episodic Buffer loaded with {len(self)} episodes.")
+
+
 def offline_evaluation_F(self, eval_buffer, weighted=True, eps=0.01):
     states, actions, subactions, subactionvecs, rewards, not_dones, subpibs, estm_subpibs = eval_buffer
     rewards = rewards[:, :, 0].cpu().numpy()

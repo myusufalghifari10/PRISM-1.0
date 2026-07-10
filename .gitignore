@@ -70,6 +70,8 @@ venv/
 env/
 .venv/
 prism-venv/
+venv/
+venv_offlinerl
 
 # ──── IDE ────
 .vscode/
@@ -85,3 +87,4 @@ VALIDITY.md
 DIF.md
 .Progress_Magang_ICU.md.kate-swp
 Progress_Magang_ICU.md
+note.md

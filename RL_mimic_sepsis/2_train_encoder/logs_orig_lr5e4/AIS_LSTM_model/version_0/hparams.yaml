@@ -1,6 +1,0 @@
-action_dim: 25
-context_dim: 5
-hidden_dim: 128
-latent_dim: 64
-lr: 0.0005
-state_dim: 33

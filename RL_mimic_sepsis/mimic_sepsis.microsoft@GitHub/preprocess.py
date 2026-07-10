@@ -15,8 +15,8 @@ import psycopg2 as pg
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-u", "--username", default='USERNAME', help="Username used to access the MIMIC Database", type=str)
-parser.add_argument("-p", "--password", default='PASSWORD', help="User's password for MIMIC Database", type=str)
+parser.add_argument("-u", "--username", default='postgres', help="Username used to access the MIMIC Database", type=str)
+parser.add_argument("-p", "--password", default='', help="User's password for MIMIC Database", type=str)
 pargs = parser.parse_args()
 
 # Initializing database connection

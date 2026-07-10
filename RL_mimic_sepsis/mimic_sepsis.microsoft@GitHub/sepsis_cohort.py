@@ -94,9 +94,9 @@ microbio['charttime'] = microbio['charttime'].fillna(microbio['chartdate'])
 del microbio['chartdate']
 bacterio = pd.concat([microbio, culture], sort=False, ignore_index=True)
 
-demog['morta_90'] = demog['morta_90'].fillna(0)
-demog['morta_hosp'] = demog['morta_hosp'].fillna(0)
-demog['elixhauser'] = demog['elixhauser'].fillna(0)
+demog['morta_90'].fillna(0, inplace=True)
+demog['morta_hosp'].fillna(0, inplace=True)
+demog['elixhauser'].fillna(0, inplace=True)
 
 # Keep only the first icustay of an admission (CRITICAL FIX FROM MATLAB CODE)
 demog = demog.drop_duplicates(subset=['admittime','dischtime'],keep='first')
@@ -855,15 +855,15 @@ ii = reformat4t['age'] > 150*365.25
 reformat4t.loc[ii,'age'] = 91.4*365.25
 
 # FIX MECHVENT
-reformat4t['mechvent'] = reformat4t['mechvent'].fillna(0)
+reformat4t['mechvent'].fillna(0, inplace=True)
 reformat4t.loc[reformat4t['mechvent'] > 0, 'mechvent'] = 1
 
 # FIX Elixhauser missing values
-reformat4t.loc[np.isnan(reformat4t['elixhauser']), 'elixhauser'] = np.nanmedian(reformat4t['elixhauser'])   #use the median value / only a few missing data points 
+reformat4t['elixhauser'].loc[np.isnan(reformat4t['elixhauser'])] = np.nanmedian(reformat4t['elixhauser'])   #use the median value / only a few missing data points 
 
 # Vasopressors / no NAN
-reformat4t['median_dose_vaso'] = reformat4t['median_dose_vaso'].fillna(0)
-reformat4t['max_dose_vaso'] = reformat4t['max_dose_vaso'].fillna(0)
+reformat4t['median_dose_vaso'].fillna(0, inplace=True)
+reformat4t['max_dose_vaso'].fillna(0, inplace=True)
 
 # Recompute P/F with no missing values...
 reformat4t['PaO2_FiO2'] = reformat4t['paO2']/reformat4t['FiO2_1']
@@ -871,10 +871,10 @@ reformat4t['PaO2_FiO2'] = reformat4t['paO2']/reformat4t['FiO2_1']
 # Recompute SHOCK INDEX without NAN and INF
 reformat4t['Shock_Index'] = reformat4t['HR']/reformat4t['SysBP']
 
-reformat4t.loc[np.isinf(reformat4t['Shock_Index']), 'Shock_Index'] = np.nan
+reformat4t.loc[np.isinf(reformat4t['Shock_Index']), 'Shock_Index'] = np.NaN
 
 d = np.nanmean(reformat4t['Shock_Index'])
-reformat4t['Shock_Index'] = reformat4t['Shock_Index'].fillna(d)
+reformat4t['Shock_Index'].fillna(d, inplace=True)
 
 # SOFA - at each timepoint we need (in this order):  
 # P/F,  MV,  PLT,  TOT_BILI,  MAP,  NORAD(max),  GCS,  CR,  UO
@@ -956,11 +956,7 @@ reformat4t = reformat4t.loc[~ii]
 # Exclude patients who died in ICU during data collection period
 print('Full ICU -- excluding patients who died in ICU during data collection period')
 ii = (reformat4t['bloc'] == 1) & (reformat4t['died_within_48h_of_out_time'] == 1) & (reformat4t['delay_end_of_record_and_discharge_or_death'] < 24)
-# NOTE: Reverted to Tang's original (buggy) code for reproduction fidelity.
-# Tang's sepsis_cohortOri.py uses .index which returns DataFrame index positions
-# instead of actual icustay IDs, causing this exclusion to be a no-op.
-# This keeps ~725 extra patients in the cohort (19,287 vs 18,562).
-ii = reformat4t['icustayid'][ii].isin(icustayidlist).index  # Tang's original: buggy but matches paper cohort
+ii = reformat4t['icustayid'][ii].isin(icustayidlist).index 
 ii = reformat4t['icustayid'].isin(ii)
 reformat4t = reformat4t.loc[~ii] 
 
@@ -1504,15 +1500,15 @@ ii = reformat3t['age'] > 150*365.25
 reformat3t.loc[ii,'age'] = 91.4*365.25
 
 # FIX MECHVENT
-reformat3t['mechvent'] = reformat3t['mechvent'].fillna(0)
+reformat3t['mechvent'].fillna(0, inplace=True)
 reformat3t.loc[reformat3t['mechvent'] > 0, 'mechvent'] = 1
 
 # FIX Elixhauser missing values
-reformat3t.loc[np.isnan(reformat3t['elixhauser']), 'elixhauser'] = np.nanmedian(reformat3t['elixhauser'])   #use the median value / only a few missing data points
+reformat3t['elixhauser'].loc[np.isnan(reformat3t['elixhauser'])] = np.nanmedian(reformat3t['elixhauser'])   #use the median value / only a few missing data points 
 
 # Vasopressors / no NAN
-reformat3t['median_dose_vaso'] = reformat3t['median_dose_vaso'].fillna(0)
-reformat3t['max_dose_vaso'] = reformat3t['max_dose_vaso'].fillna(0)
+reformat3t['median_dose_vaso'].fillna(0, inplace=True)
+reformat3t['max_dose_vaso'].fillna(0, inplace=True)
 
 # Check missingness proportions here
 miss = pd.DataFrame([np.sum(np.isnan(reformat3t.values), axis=0)/reformat3t.shape[0]], columns=reformat3t.columns)
@@ -1562,9 +1558,9 @@ reformat4t['PaO2_FiO2'] = reformat4t['paO2']/reformat4t['FiO2_1']
 # Recompute SHOCK INDEX without NAN and INF
 reformat4t['Shock_Index'] = reformat4t['HR']/reformat4t['SysBP']
 
-reformat4t.loc[np.isinf(reformat4t['Shock_Index']), 'Shock_Index'] = np.nan
+reformat4t.loc[np.isinf(reformat4t['Shock_Index']), 'Shock_Index'] = np.NaN
 d = np.nanmean(reformat4t['Shock_Index'])
-reformat4t['Shock_Index'] = reformat4t['Shock_Index'].fillna(d)
+reformat4t['Shock_Index'].fillna(d, inplace=True)
 
 shock_idx = reformat4t['Shock_Index'] >= np.quantile(reformat4t['Shock_Index'], 0.999)
 reformat4t.loc[shock_idx, 'Shock_Index'] = np.quantile(reformat4t['Shock_Index'], 0.999)
@@ -1643,12 +1639,12 @@ MIMICzs[:,46] = 2*MIMICzs[:,46]  # Increase weight of this variable
 # compute conversion factors using MIMIC data
 a = MIMICtable['input_4hourly'].values  # IV fluid
 a = stats.rankdata(a[a>0])/len(a[a>0]) # excludes zero fluid (will be action 1)
-iof = np.floor((a+0.2499999999)*4).astype(int) #converts iv volume in 4 actions
+iof = np.floor((a+0.2499999999)*4).astype(np.int) #converts iv volume in 4 actions
 a = MIMICtable['input_4hourly'] > 0 # location of non-zero fluid in big matrix
 io = np.ones(MIMICtable.shape[0]) # array of ones, by default     
 io[a] = iof + 1 # where more than zero fluid given: save actual action
 
-vc = MIMICtable['max_dose_vaso'].values.copy()
+vc = MIMICtable['max_dose_vaso'].values
 vcr = stats.rankdata(vc[vc != 0])/len(vc[vc != 0])
 vcr = np.floor((vcr+0.249999999999)*4)
 vcr[vcr == 0] = 1
