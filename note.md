@@ -58,15 +58,25 @@
 
 ### Kesimpulan
 
+Penelitian ini menghadapi dan menyelesaikan **dua tantangan** dalam offline RL untuk rekomendasi treatment sepsis:
+
+**Tantangan 1 — Temporal Misalignment.** Data MIMIC-III yang diproses dengan "original" alignment (state_t + action_t se-window) melanggar kausalitas — action diputuskan di awal window, state adalah hasilnya, tapi di data mereka sebaris. Ini menghasilkan model yang belajar hubungan terbalik ("BP tinggi → kasih vasopressor" padahal sebaliknya) dan OPE yang self-consistent tapi invalid (ESS artifisial 200-231). Solusi: **shifted alignment** — menggeser action mundur 1 indeks sehingga state_t → action_{t+1}. Hasil: OPE menjadi jujur (ESS 171-188, mendekati Tang paper 178) dan BCQf WIS meningkat +1.27.
+
+**Tantangan 2 — Action Space.** Tiga pendekatan dibandingkan: (a) 5×5 discrete — 25 head independen, data per kombinasi terlalu sedikit, kombinasi langka selalu kena BCQ filter; (b) continuous (DDPG/TD3) — OPE tidak bisa pakai WIS, harus Direct Method yang mengasumsikan Q-function akurat, dan ruang action tak hingga membuat banyak region tanpa data → Q-function collapse (Zou et al. 2025 membuktikan discrete 6× outperform continuous); (c) **factored (BCQf)** — dekomposisi linear Q = q_fluid + q_vaso dengan 10 head, tiap sub-action berbagi data dari semua kombinasi (N/5 vs N/25), constraint per sub-action memungkinkan treatment agresif pada sub-action yang cukup data. Hasil: BCQf unggul +1.37 WIS dan +16.8 ESS atas BCQ di pipeline shifted.
+
+**Temuan kunci:**
+
 1. **Shifted alignment menghasilkan OPE yang jujur.** ESS shifted (171-188) lebih rendah dari non-shifted (200-231), tapi mencerminkan realita: berapa banyak sampel yang benar-benar mendukung policy ketika causal ordering benar. Mendekati Tang paper (178).
 
 2. **Shifted alignment meningkatkan performa BCQf.** WIS BCQf naik dari 94.79 (non-shifted) ke 96.06 (shifted) — peningkatan +1.27. Koreksi temporal ordering saja memberikan gain signifikan.
 
-3. **BCQf baru unggul di pipeline yang benar.** Di non-shifted, BCQf kalah dari BCQ (−1.04 WIS). Di shifted, BCQf menang (+1.37 WIS). Ini membuktikan dekomposisi faktorial bekerja optimal hanya saat data causally correct.
+3. **BCQf baru unggul di pipeline yang benar.** Di non-shifted, BCQf kalah dari BCQ (−1.04 WIS). Di shifted, BCQf menang (+1.37 WIS, +16.8 ESS). Ini membuktikan dekomposisi faktorial bekerja optimal hanya saat data causally correct.
 
 4. **Tang 2022 sudah setengah shifted.** BCQ/BCQf Tang melakukan internal shift di `data.py` load() (baris 43-46), tapi encoder dan KNN tetap non-shifted. Paper Tang 2026 ("Off by a Beat") baru benerin full pipeline.
 
-5. **Kontribusi:** (a) reproduksi penuh metodologi Tang 2022, (b) koreksi temporal alignment penuh (Tang 2026), (c) bukti empiris bahwa BCQf > BCQ hanya konsisten muncul di pipeline shifted — menggarisbawahi pentingnya causal correctness dalam evaluasi RL klinis.
+5. **Factored > 5×5 > Continuous untuk dataset klinis sparse.** Discrete 5×5 gagal di kombinasi langka, continuous gagal karena data per titik nyaris nol, factored bertahan karena sample sharing antar sub-action. Didukung oleh Zou et al. (2025) yang membuktikan discrete outperform continuous 6× di WIS.
+
+6. **Kontribusi:** (a) reproduksi penuh metodologi Tang 2022, (b) koreksi temporal alignment penuh (Tang 2026), (c) analisis perbandingan tiga action space untuk sepsis RL, (d) bukti empiris bahwa BCQf > BCQ hanya konsisten muncul di pipeline shifted — menggarisbawahi pentingnya causal correctness dalam evaluasi RL klinis.
 
 ---
 
