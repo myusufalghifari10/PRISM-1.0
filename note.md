@@ -20,21 +20,20 @@
 | | Tang | Kita |
 |---|---|---|
 | Arsitektur | LSTM(128,64), pred(89→33) | LSTM(128,64), pred(89→33) — **identik** |
-| Checkpoint | `version_15/epoch=203-step=21623.ckpt` | `version_17/epoch=251-step=26712-v1.ckpt` |
-| latent_dim | 64 | 64 |
-| lr | ? | 1e-4 |
-| val_loss | ? | 453.37 |
+| Checkpoint | Tidak diketahui (dari source code: `v15/e=203-s=21623.ckpt`) | `version_17/epoch=251-step=26712-v1.ckpt` |
+| latent_dim | 64 (dikonfirmasi dari checkpoint Tang) | 64 |
+| lr | Tidak diketahui | 1e-4 |
+| val_loss | Tidak diketahui | 453.37 |
 
-**Penyebab**: Arsitektur 100% sama, tapi environment training beda (PyTorch 1.x vs 2.x) → optimizer behavior beda → gradient update divergen → bobot berbeda walaupun seed sama.
+**Penyebab**: Arsitektur 100% identik, tapi environment training Tang tidak diketahui (tidak ada `requirements.txt`, tidak ada Docker image, tidak disebutkan versi library). Bobot berbeda karena environment berbeda → hasil training divergen.
 
-### 3. Environment: tidak direproduksi secara byte-level
-| | Tang | Kita |
-|---|---|---|
-| Python | 3.9 (conda `py39_lightning`) | 3.9 (venv `venv_offlinerl`) |
-| PyTorch | ~1.10 (2022) | 2.8.0 |
-| Lightning | 1.x + TestTubeLogger + SLURM | 2.6 + CSVLogger + local |
+### 3. Environment: Tang tidak memberikan spesifikasi
+| | Yang diketahui |
+|---|---|
+| Tang | Hanya nama conda env (`py39_lightning`) dari SLURM config. Versi PyTorch, Lightning, dan library lain **tidak disebutkan** di paper maupun repository. |
+| Kita | Python 3.9, PyTorch 2.8, Lightning 2.6, CSVLogger, local GPU |
 
-**Konsekuensi**: PyTorch 1.x vs 2.x beda implementasi optimizer, RNG, backward pass. Seed 0 di PyTorch 1.x ≠ seed 0 di PyTorch 2.x. Training logic sama, hasil berbeda.
+**Konsekuensi**: Tanpa environment Tang yang persis, reproduksi byte-level (bobot identik) mustahil. Yang bisa direproduksi: metodologi (arsitektur, pipeline, hyperparameter search, model selection).
 
 ---
 
